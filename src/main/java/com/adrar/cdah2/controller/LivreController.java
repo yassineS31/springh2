@@ -1,8 +1,11 @@
 package com.adrar.cdah2.controller;
 
+import com.adrar.cdah2.exception.LivreNotFoundException;
+import com.adrar.cdah2.exception.NoLivreFoundException;
 import com.adrar.cdah2.model.Livre;
 import com.adrar.cdah2.service.LivreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,16 +18,22 @@ public class LivreController {
     // Méthode qui retourne tous les objets Livre
     @GetMapping("/livres")
     public Iterable<Livre> getAllLivres() {
+        if(livreService.countLivre() == 0) {
+            throw new NoLivreFoundException();
+        }
         return livreService.getAll();
     }
 
     @GetMapping("/livre/{id}")
     public Livre getLivreById(@PathVariable Integer id) {
-        return livreService.getById(id).orElse(null);
+        return livreService.getById(id).orElseThrow(
+                ()-> new LivreNotFoundException(id)
+        );
     }
 
     // Méthode qui ajoute un Livre
     @PostMapping("/livre")
+    @ResponseStatus(HttpStatus.CREATED)
     public Livre saveLivre(@RequestBody Livre livre) {
         return livreService.add(livre);
     }
@@ -37,7 +46,6 @@ public class LivreController {
         }
         return "Livre introuvable";
     }
-
 
     // Méthode qui met à jour un Livre
     @PutMapping("/livre/{id}")

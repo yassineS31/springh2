@@ -17,6 +17,10 @@ public class LivreService {
         return livreRepository.findAll();
     }
 
+    public Long countLivre() {
+        return livreRepository.count();
+    }
+
     //Méthode qui retourne un Livre par son id
     public Optional<Livre> getById(int id){
         return livreRepository.findById(id);

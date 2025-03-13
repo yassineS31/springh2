@@ -1,0 +1,46 @@
+package com.adrar.cdah2.service;
+
+import com.adrar.cdah2.model.Livre;
+import com.adrar.cdah2.repository.LivreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class LivreService {
+
+    @Autowired
+    private LivreRepository livreRepository;
+    //Méthode qui retourne tous les objets Livre
+    public Iterable<Livre> getAll(){
+        return livreRepository.findAll();
+    }
+
+    //Méthode qui retourne un Livre par son id
+    public Optional<Livre> getById(int id){
+        return livreRepository.findById(id);
+    }
+    //Méthode qui ajoute un Livre
+    public Livre add(Livre livre){
+        return livreRepository.save(livre);
+    }
+
+    //Méthode qui supprime un Livre par son id
+    public boolean remove(int id) {
+        if(!livreRepository.existsById(id)) {
+            return false;
+        }
+        livreRepository.deleteById(id);
+        return true;
+    }
+
+    //Méthode qui met à jour un Livre
+    public Livre update(Livre livre, int id){
+        if(!livreRepository.existsById(id)) {
+            return null;
+        }
+        livre.setId(id);
+        return livreRepository.save(livre);
+    }
+}

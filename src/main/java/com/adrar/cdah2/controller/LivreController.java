@@ -3,9 +3,7 @@ package com.adrar.cdah2.controller;
 import com.adrar.cdah2.model.Livre;
 import com.adrar.cdah2.service.LivreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -18,5 +16,32 @@ public class LivreController {
     @GetMapping("/livres")
     public Iterable<Livre> getAllLivres() {
         return livreService.getAll();
+    }
+
+    @GetMapping("/livre/{id}")
+    public Livre getLivreById(@PathVariable Integer id) {
+        return livreService.getById(id).orElse(null);
+    }
+
+    // Méthode qui ajoute un Livre
+    @PostMapping("/livre")
+    public Livre saveLivre(@RequestBody Livre livre) {
+        return livreService.add(livre);
+    }
+
+    // Méthode qui supprime un Livre par son id
+    @DeleteMapping("/livre/{id}")
+    public String deleteLivreById(@PathVariable Integer id) {
+        if(livreService.remove(id)) {
+            return "Livre supprimé avec succes";
+        }
+        return "Livre introuvable";
+    }
+
+
+    // Méthode qui met à jour un Livre
+    @PutMapping("/livre/{id}")
+    public Livre updateLivreById(@PathVariable Integer id, @RequestBody Livre livre) {
+        return livreService.update(livre, id);
     }
 }

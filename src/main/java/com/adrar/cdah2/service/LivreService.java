@@ -38,7 +38,8 @@ public class LivreService {
     //Méthode qui met à jour un Livre
     public Livre update(Livre livre, int id){
         if(!livreRepository.existsById(id)) {
-            return null;
+            livre.setTitre("Livre introuvable");
+            return livre;
         }
         livre.setId(id);
         return livreRepository.save(livre);

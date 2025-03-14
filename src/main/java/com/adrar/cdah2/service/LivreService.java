@@ -12,6 +12,7 @@ public class LivreService {
 
     @Autowired
     private LivreRepository livreRepository;
+
     //Méthode qui retourne tous les objets Livre
     public Iterable<Livre> getAll(){
         return livreRepository.findAll();

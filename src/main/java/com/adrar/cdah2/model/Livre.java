@@ -18,22 +18,48 @@ public class Livre {
     @Column(name = "titre", nullable = false, length = 50)
     private String titre;
 
-    @Column(name="description", nullable = false, length = 255)
+    @Column(name = "description", nullable = false, length = 255)
     private String description;
 
-    @Column(name="date_publication", nullable = false)
+    @Column(name = "date_publication", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date datePublication;
+
+    @Column(name = "genres", nullable = true, length = 50)
+    private String genres;
+
+    @Column(name = "auteur", nullable = true, length = 50)
+    private String auteur;
+
+    @Column(name = "maison_edition", nullable = true, length = 50)
+    private String maisonEdition;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_utilisateur")
+    private User user;
+
+
 
     /*---------------------------------------
                   Constructeurs
     ---------------------------------------*/
-    public Livre() {}
+    public Livre() {
+    }
 
     public Livre(String titre, String description, Date datePublication) {
         this.titre = titre;
         this.description = description;
         this.datePublication = datePublication;
+    }
+
+    public Livre(String titre, String description, Date datePublication, String genres, String auteur, String maisonEdition) {
+        this.titre = titre;
+        this.description = description;
+        this.datePublication = datePublication;
+        this.genres = genres;
+        this.auteur = auteur;
+        this.maisonEdition = maisonEdition;
     }
 
     /*---------------------------------------
@@ -72,6 +98,37 @@ public class Livre {
         this.datePublication = datePublication;
     }
 
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
+    public String getAuteur() {
+        return auteur;
+    }
+
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
+    }
+
+    public String getMaisonEdition() {
+        return maisonEdition;
+    }
+
+    public void setMaisonEdition(String maisonEdition) {
+        this.maisonEdition = maisonEdition;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     /*---------------------------------------
                   Méthodes
     ---------------------------------------*/

@@ -1,5 +1,6 @@
 package com.adrar.cdah2.controller;
 
+import com.adrar.cdah2.dto.LivreDto;
 import com.adrar.cdah2.exception.LivreNotFoundException;
 import com.adrar.cdah2.exception.NoLivreFoundException;
 import com.adrar.cdah2.model.Livre;
@@ -7,6 +8,8 @@ import com.adrar.cdah2.service.LivreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -18,9 +21,6 @@ public class LivreController {
     // Méthode qui retourne tous les objets Livre
     @GetMapping("/livres")
     public Iterable<Livre> getAllLivres() {
-        if (livreService.countLivre() == 0) {
-            throw new NoLivreFoundException();
-        }
         return livreService.getAll();
     }
 
@@ -49,7 +49,22 @@ public class LivreController {
 
     // Méthode qui met à jour un Livre
     @PutMapping("/livre/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Livre updateLivreById(@PathVariable Integer id, @RequestBody Livre livre) {
         return livreService.update(livre, id);
+    }
+
+    //Méthode qui retourne un livredto
+    @GetMapping("/livredto/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public LivreDto getLivreDtoById(@PathVariable Integer id) {
+        return livreService.getLivreDtoById(id);
+    }
+
+    //Méthode qui retourne tous les objets LivreDto
+    @GetMapping("/livresdto")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LivreDto> getAllLivresDto() {
+        return livreService.getAllLivreDto();
     }
 }

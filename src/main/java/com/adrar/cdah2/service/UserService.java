@@ -22,7 +22,7 @@ public class UserService {
     }
 
     //récupére un compte utilisateur par son id
-    public Optional<User> findUserById(Long id) {
+    public Optional<User> findUserById(Integer id) {
         return Optional.of(userRepository.findById(id).orElse(new User()));
     }
 }

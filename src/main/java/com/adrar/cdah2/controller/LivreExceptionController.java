@@ -2,6 +2,8 @@ package com.adrar.cdah2.controller;
 
 import com.adrar.cdah2.exception.LivreNotFoundException;
 import com.adrar.cdah2.exception.NoLivreFoundException;
+import com.adrar.cdah2.exception.SaveLivreExistException;
+import com.adrar.cdah2.exception.UpdateLivreNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +18,7 @@ public class LivreExceptionController {
 
     @ExceptionHandler(LivreNotFoundException.class)
     public ResponseEntity<Map<String, String>> livreNotFound(LivreNotFoundException livreNotFound) {
-        Map <String, String> errorResponse = new HashMap<>();
+        Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("Erreur", livreNotFound.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
@@ -29,4 +31,22 @@ public class LivreExceptionController {
         return noLivreFound.getMessage();
     }
 
+
+    @ExceptionHandler(UpdateLivreNotFoundException.class)
+    public ResponseEntity<Map<String, String>> updateLivreNotFoundhandler(UpdateLivreNotFoundException updateLivreNotFoundException) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("Erreur", updateLivreNotFoundException.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(SaveLivreExistException.class)
+    public ResponseEntity<Map<String, String>> saveLivreExist(SaveLivreExistException saveLivreExistException) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("Erreur", saveLivreExistException.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(errorResponse);
+    }
 }

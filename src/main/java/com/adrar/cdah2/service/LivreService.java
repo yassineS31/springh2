@@ -1,5 +1,7 @@
 package com.adrar.cdah2.service;
 
+import com.adrar.cdah2.exception.SaveLivreExistException;
+import com.adrar.cdah2.exception.UpdateLivreNotFoundException;
 import com.adrar.cdah2.model.Livre;
 import com.adrar.cdah2.repository.LivreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class LivreService {
     }
     //Méthode qui ajoute un Livre
     public Livre add(Livre livre){
+        if(livreRepository.findByTitreAndDescription(livre.getTitre(), livre.getDescription()).isPresent()) {
+            throw  new SaveLivreExistException(livre);
+        }
         return livreRepository.save(livre);
     }
 
@@ -43,8 +48,7 @@ public class LivreService {
     //Méthode qui met à jour un Livre
     public Livre update(Livre livre, int id){
         if(!livreRepository.existsById(id)) {
-            livre.setTitre("Livre introuvable");
-            return livre;
+            throw new UpdateLivreNotFoundException(id);
         }
         livre.setId(id);
         return livreRepository.save(livre);

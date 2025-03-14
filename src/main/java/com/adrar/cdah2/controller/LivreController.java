@@ -18,7 +18,7 @@ public class LivreController {
     // Méthode qui retourne tous les objets Livre
     @GetMapping("/livres")
     public Iterable<Livre> getAllLivres() {
-        if(livreService.countLivre() == 0) {
+        if (livreService.countLivre() == 0) {
             throw new NoLivreFoundException();
         }
         return livreService.getAll();
@@ -27,7 +27,7 @@ public class LivreController {
     @GetMapping("/livre/{id}")
     public Livre getLivreById(@PathVariable Integer id) {
         return livreService.getById(id).orElseThrow(
-                ()-> new LivreNotFoundException(id)
+                () -> new LivreNotFoundException(id)
         );
     }
 
@@ -41,7 +41,7 @@ public class LivreController {
     // Méthode qui supprime un Livre par son id
     @DeleteMapping("/livre/{id}")
     public String deleteLivreById(@PathVariable Integer id) {
-        if(livreService.remove(id)) {
+        if (livreService.remove(id)) {
             return "Livre supprimé avec succes";
         }
         return "Livre introuvable";

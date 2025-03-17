@@ -1,6 +1,8 @@
 package com.adrar.cdah2.model;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -18,10 +20,13 @@ public class Livre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @NotBlank
+    @Length(min = 3, max = 20)
     @Column(name = "titre", nullable = false, length = 50)
     private String titre;
 
+    @NotBlank
+    @Length(min = 5)
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
@@ -135,6 +140,13 @@ public class Livre {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+    }
+    public void removeGenre(Genre genre) {
+        this.genres.remove(genre);
+    }
     /*---------------------------------------
                   Méthodes
     ---------------------------------------*/
@@ -147,4 +159,6 @@ public class Livre {
                 ", datePublication=" + datePublication +
                 '}';
     }
+
+
 }

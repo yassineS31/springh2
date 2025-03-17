@@ -1,6 +1,8 @@
 package com.adrar.cdah2.model;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "utilisateur")
@@ -9,6 +11,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank
+    @Length(message = "Le nom doit comporter entre 3 et 20 caractères",min=3,max=20)
     @Column(name="firstname", nullable = false)
     private String firstname;
 

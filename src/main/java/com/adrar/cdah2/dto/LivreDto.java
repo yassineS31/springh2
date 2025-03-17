@@ -1,7 +1,9 @@
 package com.adrar.cdah2.dto;
 
 import com.adrar.cdah2.model.MaisonEdition;
+import com.adrar.cdah2.model.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record LivreDto(
@@ -11,7 +13,7 @@ public record LivreDto(
         String libele,
         String maisonEdition,
         String datePublication,
-        String genres
+        ArrayList genres
 ) {
 
 }

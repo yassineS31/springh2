@@ -16,6 +16,16 @@ CREATE TABLE livre(
     date_publication DATE NOT NULL
 );
 
+CREATE TABLE maison_edition(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    libele VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL
+);
+CREATE TABLE genre(
+    genre_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
 INSERT INTO utilisateur (firstname, lastname, email, password) VALUES
 ('Mathieu', 'Mithridate', 'mathieumith@test.com', '1234'),
 ('Jean', 'Albert', 'jeanalbert@test.fr', '1234'),
@@ -27,3 +37,8 @@ INSERT INTO livre (titre, description, date_publication) VALUES
 ('Le Meilleur des mondes', 'Un roman de science-fiction sur une société futuriste', '1932-08-31');
 
 CREATE USER test PASSWORD '1234' ADMIN;
+
+       -- désactiver verification clés etrangéres
+set foreign_key_check = 0;
+
+

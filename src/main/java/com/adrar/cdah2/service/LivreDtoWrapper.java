@@ -15,8 +15,9 @@ public class LivreDtoWrapper {
                 livre.getId(),
                 livre.getTitre(),
                 livre.getAuteur(),
+                livre.getGenres().toString(),
                 livre.getDatePublication().toString(),
-                livre.getMaisonEdition(),
+                livre.getMaisonEdition().getLibele(),
                 livre.getUser().getEmail()
         );
     }

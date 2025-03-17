@@ -3,14 +3,18 @@ package com.adrar.cdah2.model;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "livre")
 public class Livre {
 
+
     /*---------------------------------------
-                  Attributs
-    ---------------------------------------*/
+                      Attributs
+        ---------------------------------------*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,15 +29,18 @@ public class Livre {
     @Temporal(TemporalType.DATE)
     private Date datePublication;
 
-    @Column(name = "genres", nullable = true, length = 50)
-    private String genres;
+    @ManyToMany
+    @JoinTable ( name= "livre_genre",
+    joinColumns = @JoinColumn(name = "livre_id"),
+    inverseJoinColumns = @JoinColumn( name = "genre_id ") )
+    private List<Genre> genres = new ArrayList<>();
 
     @Column(name = "auteur", nullable = true, length = 50)
     private String auteur;
 
-    @Column(name = "maison_edition", nullable = true, length = 50)
-    private String maisonEdition;
-
+    @ManyToOne
+    @JoinColumn(name = "maison_edition_id")
+    private MaisonEdition maisonEdition;
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
@@ -41,23 +48,22 @@ public class Livre {
 
 
 
+
+
     /*---------------------------------------
                   Constructeurs
     ---------------------------------------*/
-    public Livre() {
+    public Livre(
+    ) {
+        this.genres = new ArrayList<>();
     }
 
-    public Livre(String titre, String description, Date datePublication) {
+
+    public Livre(String titre, String description, Date datePublication, String auteur, MaisonEdition maisonEdition) {
         this.titre = titre;
         this.description = description;
         this.datePublication = datePublication;
-    }
-
-    public Livre(String titre, String description, Date datePublication, String genres, String auteur, String maisonEdition) {
-        this.titre = titre;
-        this.description = description;
-        this.datePublication = datePublication;
-        this.genres = genres;
+        this.genres = new ArrayList<>();
         this.auteur = auteur;
         this.maisonEdition = maisonEdition;
     }
@@ -98,11 +104,11 @@ public class Livre {
         this.datePublication = datePublication;
     }
 
-    public String getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(String genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 
@@ -114,11 +120,11 @@ public class Livre {
         this.auteur = auteur;
     }
 
-    public String getMaisonEdition() {
+    public MaisonEdition getMaisonEdition() {
         return maisonEdition;
     }
 
-    public void setMaisonEdition(String maisonEdition) {
+    public void setMaisonEdition(MaisonEdition maisonEdition) {
         this.maisonEdition = maisonEdition;
     }
 
